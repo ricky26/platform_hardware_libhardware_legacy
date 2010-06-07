@@ -35,6 +35,7 @@
 
 static struct wpa_ctrl *ctrl_conn;
 static struct wpa_ctrl *monitor_conn;
+static int use_builtin = 0; // We are using a kernel built-in wlan driver.
 
 extern int do_dhcp();
 extern int ifc_init();
@@ -62,7 +63,7 @@ static char iface[PROPERTY_VALUE_MAX];
 #endif
 #define WIFI_TEST_INTERFACE		"sta"
 
-static const char IFACE_DIR[]           = "/data/system/wpa_supplicant";
+static const char IFACE_DIR[]           = "/data/misc/wifi/wpa_supplicant";
 static const char DRIVER_MODULE_NAME[]  = WIFI_DRIVER_MODULE_NAME;
 static const char DRIVER_MODULE_TAG[]   = WIFI_DRIVER_MODULE_NAME " ";
 static const char DRIVER_MODULE_PATH[]  = WIFI_DRIVER_MODULE_PATH;
@@ -169,6 +170,9 @@ int wifi_load_driver()
     char driver_status[PROPERTY_VALUE_MAX];
     int count = 100; /* wait at most 20 seconds for completion */
 
+	// PoC -- Ricky26
+	return 0;
+
     if (check_driver_loaded()) {
         return 0;
     }
@@ -203,6 +207,9 @@ int wifi_load_driver()
 int wifi_unload_driver()
 {
     int count = 20; /* wait at most 10 seconds for completion */
+
+	// LOLOLOLOL! Proof of concept. -- Ricky26
+	return 0;
 
     if (rmmod(DRIVER_MODULE_NAME) == 0) {
 	while (count-- > 0) {
